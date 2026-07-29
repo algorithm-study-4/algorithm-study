@@ -6,7 +6,6 @@ O(n)
 """
 from collections import deque
 def solution(bridge_length, weight, truck_weights):
-    answer = 0
     
     q = deque()
     size = 0
@@ -35,5 +34,8 @@ def solution(bridge_length, weight, truck_weights):
                 size += curr_w
                 q.append((curr_w, time))
                 truck_idx += 1
+        elif q:
+            time = q[0][1] + bridge_length - 1
+         
         
     return time
