@@ -1,7 +1,7 @@
 """
 큐 2개
 
-O(len(card1) + len(card2))
+O(len(goal))
 """
 
 from collections import deque
