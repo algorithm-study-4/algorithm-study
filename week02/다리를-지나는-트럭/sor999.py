@@ -27,15 +27,11 @@ def solution(bridge_length, weight, truck_weights):
                 q.popleft()
             
         # 다리에 넣기
-        if truck_idx < n:
-            curr_w = truck_weights[truck_idx]
- 
-            if size + curr_w <= weight:
-                size += curr_w
-                q.append((curr_w, time))
+        if truck_idx < n and size + truck_weights[truck_idx] <= weight:
+                size += truck_weights[truck_idx]
+                q.append((truck_weights[truck_idx], time))
                 truck_idx += 1
         elif q:
             time = q[0][1] + bridge_length - 1
-         
-        
+            
     return time
