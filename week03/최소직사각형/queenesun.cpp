@@ -6,6 +6,21 @@ using namespace std;
 
 int solution(vector<vector<int>> sizes)
 {
+    int w = 0;
+    int h = 0;
+
+    for (auto &card : sizes)
+    {
+        int big = max(card[0], card[1]);
+        int small = min(card[0], card[1]);
+
+        w = max(w, big);
+        h = max(h, small);
+    }
+
+    return w * h;
+
+    /*
     int answer = 0;
     int max = sizes[0][0]; // 가장 긴 길이
     int max2 = 0;          // 각 명함의 가로, 세로 길이 중 더 짧은 것의 최대값
@@ -23,4 +38,5 @@ int solution(vector<vector<int>> sizes)
 
     return answer;
     // total 시간복잡도 = O(2n + n) = O(n)
+    */
 }
