@@ -17,7 +17,7 @@ int bfs(const vector<string>& maps, char start, char end) {
     vector<vector<bool>> visited(n, vector<bool>(m, false));
     queue<Node> q;
     
-    // 1. 시작점 찾기 및 큐에 삽입
+    // 시작점 찾기 및 큐에 삽입
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
             if (maps[i][j] == start) {
@@ -32,7 +32,7 @@ int bfs(const vector<string>& maps, char start, char end) {
     int dr[] = {-1, 1, 0, 0};
     int dc[] = {0, 0, -1, 1};
     
-    // 2. BFS 탐색
+    // BFS 탐색
     while (!q.empty()) {
         Node cur = q.front();
         q.pop();
