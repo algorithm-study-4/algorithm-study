@@ -5,67 +5,100 @@
 #include<iostream>
 
 using namespace std;
-
-int dx[4]{ -1, 1, 0, 0 };
-int dy[4]{ 0, 0, -1, 1 };
-
+//BFS
 vector<int> solution(vector<string> maps) {
-    int height = maps.size();
-    int width = maps[0].size();
-
-    queue<pair<int, int>> q;
-    vector<vector<bool>> v(vector<vector<bool>>(height, vector<bool>(width, false)));
+    int rows = maps.size();
+    int cols = maps[0].size();
+    
+    // 방문 여부 체크 배열
+    vector<vector<bool>> visited(rows, vector<bool>(cols, false));
     vector<int> answer;
-
-    for (int i = 0; i < height; ++i)
-        for (int j = 0; j < width; ++j)
-            if (maps[i][j] != 'X' && !v[i][j])
-            {
-                int sum = 0;
-                q.push({ i, j });
-                v[i][j] = true;
-
-                while (!q.empty())
-                {
-                    int x = q.front().second;
-                    int y = q.front().first;
+    
+    // 상하좌우 이동 방향
+    int dr[] = {-1, 1, 0, 0};
+    int dc[] = {0, 0, -1, 1};
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            // 바다가 아니고 방문하지 않은 땅을 만나면 BFS 시작
+            if (maps[i][j] != 'X' && !visited[i][j]) {
+                int total_food = 0;
+                queue<pair<int, int>> q;
+                
+                q.push({i, j});
+                visited[i][j] = true;
+                total_food += maps[i][j] - '0'; // 문자를 숫자로 변환하여 누적
+                
+                while (!q.empty()) {
+                    int r = q.front().first;
+                    int c = q.front().second;
                     q.pop();
-
-                    sum += (maps[y][x] - '0');
-
-                    for (int k = 0; k < 4; ++k)
-                    {
-                        int xx = x + dx[k];
-                        int yy = y + dy[k];
-
-                        if (xx == -1 || yy == -1 || xx == width || yy == height || maps[yy][xx] == 'X' || v[yy][xx])
-                            continue;
-
-                        v[yy][xx] = true;
-
-                        q.push({ yy, xx });
-
-                        printf("{%d %d}에서 {%d %d}로 이동!\n", y, x, yy, xx);
+                    
+                    for (int d = 0; d < 4; d++) {
+                        int nr = r + dr[d];
+                        int nc = c + dc[d];
+                        
+                        // 지도를 벗어나지 않으며, 방문하지 않았고, 바다가 아닌 경우
+                        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+                            if (maps[nr][nc] != 'X' && !visited[nr][nc]) {
+                                visited[nr][nc] = true;
+                                total_food += maps[nr][nc] - '0';
+                                q.push({nr, nc});
+                            }
+                        }
                     }
                 }
-
-                answer.push_back(sum);
+                answer.push_back(total_food);
             }
-
-    sort(answer.begin(), answer.end());
-
-    if (answer.empty())
-        answer.push_back(-1);
-
-    return answer;
-}
-
-int main () {
-    vector<int> result;
-    vector<string> maps = {"X591X","X1X5X","X231X", "1XXX1"};
-    result = solution(maps);
-    for (int i = 0; i < result.size(); i++) {
-        cout << result[i] << endl;
+        }
     }
     
+    // 섬이 없으면 -1 반환, 있으면 오름차순 정렬
+    if (answer.empty()) return {-1};
+    
+    sort(answer.begin(), answer.end());
+    return answer;
 }
+// DFS
+// vector<int> solution(vector<string> maps) {
+//     int rows = maps.size();
+//     int cols = maps[0].size();
+    
+//     vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+//     vector<int> answer;
+    
+//     int dr[] = {-1, 1, 0, 0};
+//     int dc[] = {0, 0, -1, 1};
+    
+//     // 재귀 람다 함수 정의
+//     auto dfs = [&](auto& self, int r, int c) -> int {
+//         visited[r][c] = true;
+//         int total_food = maps[r][c] - '0';
+        
+//         for (int i = 0; i < 4; i++) {
+//             int nr = r + dr[i];
+//             int nc = c + dc[i];
+            
+//             // 지도를 벗어나지 않으며, 방문하지 않았고, 바다가 아닌 경우 재귀 호출
+//             if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+//                 if (maps[nr][nc] != 'X' && !visited[nr][nc]) {
+//                     total_food += self(self, nr, nc); // 반환된 식량을 누적
+//                 }
+//             }
+//         }
+//         return total_food;
+//     };
+    
+//     for (int i = 0; i < rows; i++) {
+//         for (int j = 0; j < cols; j++) {
+//             if (maps[i][j] != 'X' && !visited[i][j]) {
+//                 answer.push_back(dfs(dfs, i, j));
+//             }
+//         }
+//     }
+    
+//     if (answer.empty()) return {-1};
+    
+//     sort(answer.begin(), answer.end());
+//     return answer;
+// }
