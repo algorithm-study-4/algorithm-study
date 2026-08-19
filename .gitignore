@@ -5,3 +5,7 @@ Makefile
 a.cpp
 prog
 input.txt
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
