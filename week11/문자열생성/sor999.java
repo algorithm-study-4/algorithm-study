@@ -32,7 +32,7 @@ public class Main {
 
         int s = 0; // 문자열 시작
         int e = n - 1; // 문자열 끝
-        int cnt = 0; // 문자 개
+        int cnt = 0; // 문자 개수
 
         StringBuilder sb = new StringBuilder();
 
@@ -49,7 +49,7 @@ public class Main {
             }
 
             // 포인터 만남/교차 -> 왼쪽
-            // 아니면 -> 사전순으로 빠른 문
+            // 아니면 -> 사전순으로 빠른 문자
             if(l >= r || arr[l] < arr[r]){
                 // 왼쪽 끝 문자 추가
                 sb.append(arr[s]);
@@ -64,7 +64,7 @@ public class Main {
                 e--;
             }
 
-            // 문자 개수 증
+            // 문자 개수 증가
             cnt++;
 
             // 문자 80자마다 줄바꿈
