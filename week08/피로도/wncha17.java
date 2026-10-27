@@ -69,7 +69,7 @@ class Solution {
 // (재귀) 3. dfs(50, dungeons, 2)
 // -> 1번 던전 검사(i=1):
 //    visited[1] = true / 남은 피로도: 10
-// -> dfs(10, dungeons, 2) 호출 => maxCount=3
+// -> dfs(10, dungeons, 3) 호출 => maxCount=3
 
 // 전체 흐름:
 // "들어갔다가(재귀) -> 안 되면(또는 끝나면) 다시 나와서(백트래킹) -> 다른 곳을 들어간다"
